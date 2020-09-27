@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - ping
+    restart: on-failure
+
+  ping:
+    build:
+      context: ./
+      args:
+        SERVICE_NAME: ping
+    ports:
+      - "4001:4001"
+    restart: on-failure

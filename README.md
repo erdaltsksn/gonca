@@ -4,6 +4,7 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/erdaltsksn/gonca)](https://pkg.go.dev/github.com/erdaltsksn/gonca)
 ![Go](https://github.com/erdaltsksn/gonca/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/erdaltsksn/gonca)](https://goreportcard.com/report/github.com/erdaltsksn/gonca)
+![CodeQL](https://github.com/erdaltsksn/gonca/workflows/CodeQL/badge.svg)
 
 Gonca is an extendible GraphQL API boilerplate aiming to follow idiomatic go and
 best practice.

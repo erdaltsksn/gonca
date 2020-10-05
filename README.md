@@ -65,18 +65,21 @@ curl --request POST \
 import axios from "axios";
 
 const options = {
-  method: 'POST',
-  url: 'http://localhost:4000/query',
-  params: {'': ''},
-  headers: {'content-type': 'application/json'},
-  data: '{"query":"{\n  ping {\n    message\n  }\n}"}'
+  method: "POST",
+  url: "http://localhost:4000/query",
+  params: { "": "" },
+  headers: { "content-type": "application/json" },
+  data: '{"query":"{\n  ping {\n    message\n  }\n}"}',
 };
 
-axios.request(options).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 ```
 
 ### Via `Python`

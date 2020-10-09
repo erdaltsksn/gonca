@@ -12,11 +12,9 @@ best practice.
 
 ## Features
 
-- Modular app structure
 - [Docker](https://www.docker.com) and [Docker Compose](https://github.com/docker/compose)
   based devops environment
-- [99designs/gqlgen](https://github.com/99designs/gqlgen) with
-  [Apollo Federation](https://github.com/apollographql/federation)
+- GraphQL API with [99designs/gqlgen](https://github.com/99designs/gqlgen)
 
 ## Requirements
 

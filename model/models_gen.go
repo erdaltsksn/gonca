@@ -2,8 +2,6 @@
 
 package model
 
-type Ping struct {
+type PingPayload struct {
 	Message string `json:"message"`
 }
-
-func (Ping) IsEntity() {}

@@ -6,16 +6,16 @@ package graph
 import (
 	"context"
 
-	"github.com/erdaltsksn/gonca/ping/generated"
-	"github.com/erdaltsksn/gonca/ping/model"
+	"github.com/erdaltsksn/gonca/generated"
+	"github.com/erdaltsksn/gonca/model"
 )
 
-func (r *queryResolver) Ping(ctx context.Context) (*model.Ping, error) {
-	msg := &model.Ping{
+func (r *queryResolver) Ping(ctx context.Context) (*model.PingPayload, error) {
+	payload := model.PingPayload{
 		Message: "Pong",
 	}
 
-	return msg, nil
+	return &payload, nil
 }
 
 // Query returns generated.QueryResolver implementation.

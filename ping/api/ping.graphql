@@ -1,7 +1,0 @@
-type Ping @key(fields: "message") {
-  message: String!
-}
-
-extend type Query {
-  ping: Ping!
-}

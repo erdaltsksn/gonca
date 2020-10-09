@@ -1,0 +1,7 @@
+type PingPayload {
+  message: String!
+}
+
+extend type Query {
+  ping: PingPayload!
+}

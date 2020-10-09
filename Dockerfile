@@ -1,11 +1,13 @@
-FROM golang:1.15.2-alpine3.12
-
-ARG SERVICE_NAME
+FROM golang:1.15.2-alpine3.12 AS builder
 
 WORKDIR /app
 
 COPY . .
 
-RUN go build -o server ./${SERVICE_NAME}/server.go
+RUN go build -o gonca ./cmd/gonca/main.go
 
-CMD [ "/app/server" ]
+FROM scratch
+
+COPY --from=builder /app/gonca .
+
+CMD ["./gonca"]

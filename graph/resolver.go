@@ -1,6 +1,14 @@
 package graph
 
+import (
+	"github.com/go-redis/redis"
+	"gorm.io/gorm"
+)
+
 // This file will not be regenerated automatically.
 
 // Resolver serves as dependency injection, add any dependenc here.
-type Resolver struct{}
+type Resolver struct {
+	DB    *gorm.DB
+	Redis *redis.Client
+}

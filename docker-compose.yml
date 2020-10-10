@@ -6,4 +6,23 @@ services:
       context: .
     ports:
       - "4000:4000"
+    depends_on:
+      - postgres
+      - redis
+    restart: on-failure
+
+  postgres:
+    image: postgres:13.0-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: gonca_user
+      POSTGRES_PASSWORD: gonca_password
+      POSTGRES_DB: gonca_db
+    restart: on-failure
+
+  redis:
+    image: redis:6.0.8-alpine
+    ports:
+      - "6379:6379"
     restart: on-failure

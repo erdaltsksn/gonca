@@ -6,6 +6,15 @@ import (
 	"time"
 )
 
+type CreateUserInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type CreateUserPayload struct {
+	ID string `json:"id"`
+}
+
 type PingPayload struct {
 	Message string `json:"message"`
 }

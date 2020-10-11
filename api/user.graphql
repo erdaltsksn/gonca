@@ -8,3 +8,16 @@ type User {
   updatedAt: Time!
   deletedAt: Time
 }
+
+input CreateUserInput {
+  email: String!
+  password: String!
+}
+
+type CreateUserPayload {
+  id: ID!
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput!): CreateUserPayload!
+}

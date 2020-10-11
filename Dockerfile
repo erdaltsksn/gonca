@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o gonca ./cmd/gonca/main.go
+RUN CGO_ENABLED=0 go build -o gonca ./cmd/gonca/main.go
 
 FROM scratch
 

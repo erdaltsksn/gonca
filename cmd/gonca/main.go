@@ -13,6 +13,7 @@ import (
 
 	"github.com/erdaltsksn/gonca/generated"
 	"github.com/erdaltsksn/gonca/graph"
+	"github.com/erdaltsksn/gonca/model"
 )
 
 func main() {
@@ -22,6 +23,9 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	// Migrate the schema
+	db.AutoMigrate(&model.User{})
 
 	// Connect to Redis
 	rdb := redis.NewClient(&redis.Options{

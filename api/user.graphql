@@ -1,0 +1,10 @@
+scalar Time
+
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  createdAt: Time!
+  updatedAt: Time!
+  deletedAt: Time
+}

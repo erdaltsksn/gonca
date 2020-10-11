@@ -2,6 +2,19 @@
 
 package model
 
+import (
+	"time"
+)
+
 type PingPayload struct {
 	Message string `json:"message"`
+}
+
+type User struct {
+	ID        string     `json:"id"`
+	Email     string     `json:"email"`
+	Password  string     `json:"password"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+	DeletedAt *time.Time `json:"deletedAt"`
 }

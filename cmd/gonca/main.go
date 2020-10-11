@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 

@@ -18,6 +18,17 @@ type CreateUserPayload {
   id: ID!
 }
 
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginPayload {
+  accessToken: String!
+  refreshToken: String!
+}
+
 extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
+  login(input: LoginInput!): LoginPayload!
 }

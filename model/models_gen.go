@@ -15,6 +15,16 @@ type CreateUserPayload struct {
 	ID string `json:"id"`
 }
 
+type LoginInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type LoginPayload struct {
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+}
+
 type PingPayload struct {
 	Message string `json:"message"`
 }

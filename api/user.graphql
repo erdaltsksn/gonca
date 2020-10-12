@@ -28,7 +28,12 @@ type LoginPayload {
   refreshToken: String!
 }
 
+type LogoutPayload {
+  message: String!
+}
+
 extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
   login(input: LoginInput!): LoginPayload!
+  logout: LogoutPayload!
 }

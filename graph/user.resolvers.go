@@ -79,6 +79,14 @@ func (r *mutationResolver) Login(ctx context.Context, input model.LoginInput) (*
 	return payload, nil
 }
 
+func (r *mutationResolver) Logout(ctx context.Context) (*model.LogoutPayload, error) {
+	payload := &model.LogoutPayload{
+		Message: "Logout successfully",
+	}
+
+	return payload, nil
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

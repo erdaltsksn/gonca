@@ -25,6 +25,10 @@ type LoginPayload struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
+type LogoutPayload struct {
+	Message string `json:"message"`
+}
+
 type PingPayload struct {
 	Message string `json:"message"`
 }

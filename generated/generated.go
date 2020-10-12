@@ -53,9 +53,14 @@ type ComplexityRoot struct {
 		RefreshToken func(childComplexity int) int
 	}
 
+	LogoutPayload struct {
+		Message func(childComplexity int) int
+	}
+
 	Mutation struct {
 		CreateUser func(childComplexity int, input model.CreateUserInput) int
 		Login      func(childComplexity int, input model.LoginInput) int
+		Logout     func(childComplexity int) int
 	}
 
 	PingPayload struct {
@@ -79,6 +84,7 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateUser(ctx context.Context, input model.CreateUserInput) (*model.CreateUserPayload, error)
 	Login(ctx context.Context, input model.LoginInput) (*model.LoginPayload, error)
+	Logout(ctx context.Context) (*model.LogoutPayload, error)
 }
 type QueryResolver interface {
 	Ping(ctx context.Context) (*model.PingPayload, error)
@@ -120,6 +126,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LoginPayload.RefreshToken(childComplexity), true
 
+	case "LogoutPayload.message":
+		if e.complexity.LogoutPayload.Message == nil {
+			break
+		}
+
+		return e.complexity.LogoutPayload.Message(childComplexity), true
+
 	case "Mutation.createUser":
 		if e.complexity.Mutation.CreateUser == nil {
 			break
@@ -143,6 +156,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.Login(childComplexity, args["input"].(model.LoginInput)), true
+
+	case "Mutation.logout":
+		if e.complexity.Mutation.Logout == nil {
+			break
+		}
+
+		return e.complexity.Mutation.Logout(childComplexity), true
 
 	case "PingPayload.message":
 		if e.complexity.PingPayload.Message == nil {
@@ -302,9 +322,14 @@ type LoginPayload {
   refreshToken: String!
 }
 
+type LogoutPayload {
+  message: String!
+}
+
 extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
   login(input: LoginInput!): LoginPayload!
+  logout: LogoutPayload!
 }
 `, BuiltIn: false},
 }
@@ -502,6 +527,41 @@ func (ec *executionContext) _LoginPayload_refreshToken(ctx context.Context, fiel
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _LogoutPayload_message(ctx context.Context, field graphql.CollectedField, obj *model.LogoutPayload) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "LogoutPayload",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Message, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_createUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -584,6 +644,41 @@ func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.C
 	res := resTmp.(*model.LoginPayload)
 	fc.Result = res
 	return ec.marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginPayload(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().Logout(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.LogoutPayload)
+	fc.Result = res
+	return ec.marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PingPayload_message(ctx context.Context, field graphql.CollectedField, obj *model.PingPayload) (ret graphql.Marshaler) {
@@ -2144,6 +2239,33 @@ func (ec *executionContext) _LoginPayload(ctx context.Context, sel ast.Selection
 	return out
 }
 
+var logoutPayloadImplementors = []string{"LogoutPayload"}
+
+func (ec *executionContext) _LogoutPayload(ctx context.Context, sel ast.SelectionSet, obj *model.LogoutPayload) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, logoutPayloadImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("LogoutPayload")
+		case "message":
+			out.Values[i] = ec._LogoutPayload_message(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var mutationImplementors = []string{"Mutation"}
 
 func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -2166,6 +2288,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "login":
 			out.Values[i] = ec._Mutation_login(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "logout":
+			out.Values[i] = ec._Mutation_logout(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -2611,6 +2738,20 @@ func (ec *executionContext) marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋ
 		return graphql.Null
 	}
 	return ec._LoginPayload(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNLogoutPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v model.LogoutPayload) graphql.Marshaler {
+	return ec._LogoutPayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v *model.LogoutPayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._LogoutPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNPingPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐPingPayload(ctx context.Context, sel ast.SelectionSet, v model.PingPayload) graphql.Marshaler {

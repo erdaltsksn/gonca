@@ -34,14 +34,15 @@ func main() {
 		DB:       0, // use default DB
 	})
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(
-		generated.Config{
-			Resolvers: &graph.Resolver{
-				DB:    db,
-				Redis: rdb,
-			},
+	// Define graphql config
+	cfg := generated.Config{
+		Resolvers: &graph.Resolver{
+			DB:    db,
+			Redis: rdb,
 		},
-	))
+	}
+
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(cfg))
 
 	http.Handle("/", srv)
 

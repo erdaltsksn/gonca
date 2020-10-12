@@ -7,6 +7,8 @@ import (
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -44,7 +46,15 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(cfg))
 
-	http.Handle("/", srv)
+	r := chi.NewRouter()
+	r.Use(
+		middleware.Logger,
+		middleware.Compress(5),
+		middleware.RedirectSlashes,
+		middleware.Recoverer,
+	)
 
-	log.Fatal(http.ListenAndServe(":4000", nil))
+	r.Handle("/", srv)
+
+	log.Fatal(http.ListenAndServe(":4000", r))
 }

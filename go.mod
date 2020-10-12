@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
+	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-ozzo/ozzo-validation/v4 v4.2.2
 	github.com/go-redis/redis/v8 v8.3.0
 	github.com/google/uuid v1.1.2

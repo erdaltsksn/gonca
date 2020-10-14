@@ -5,6 +5,8 @@ package graph
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go/v4"
@@ -80,6 +82,34 @@ func (r *mutationResolver) Login(ctx context.Context, input model.LoginInput) (*
 }
 
 func (r *mutationResolver) Logout(ctx context.Context) (*model.LogoutPayload, error) {
+	tokenString := fmt.Sprint(ctx.Value("Authorization"))
+
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New(fmt.Sprint("Unexpected signing method:", token.Header["alg"]))
+		}
+
+		return []byte("gonca_auth_secret"), nil
+	})
+	if err != nil {
+		var errExpired *jwt.TokenExpiredError
+		if errors.As(err, &errExpired) {
+			return nil, errors.New("Token is expired")
+		}
+
+		return nil, errors.New(fmt.Sprint("Failed to parse JWT token:", err))
+	}
+
+	// Get claims for token.
+	claims, _ := token.Claims.(jwt.MapClaims)
+
+	if token.Valid && claims["sub"] != "" {
+		r.Redis.Del(context.Background(), fmt.Sprint(claims["sub"]))
+	} else {
+		return nil, errors.New("Something went wrong on backend")
+	}
+
 	payload := &model.LogoutPayload{
 		Message: "Logout successfully",
 	}

@@ -38,7 +38,7 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 
 	var tmpUser User
 	if err := tx.Where(&User{Email: u.Email}).First(&tmpUser).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
-		return errors.New("this email is already registered")
+		return errors.New("This email is already registered")
 	}
 
 	generatedUUID, err := uuid.NewRandom()

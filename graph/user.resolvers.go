@@ -10,6 +10,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go/v4"
+	"github.com/erdaltsksn/gonca/database"
 	"github.com/erdaltsksn/gonca/generated"
 	"github.com/erdaltsksn/gonca/model"
 	"golang.org/x/crypto/bcrypt"
@@ -21,7 +22,7 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.CreateUse
 		Password: input.Password,
 	}
 
-	if err := r.DB.Create(&user).Error; err != nil {
+	if err := database.PostgreSQL().Create(&user).Error; err != nil {
 		return nil, err
 	}
 
@@ -44,7 +45,7 @@ func (r *mutationResolver) Login(ctx context.Context, input model.LoginInput) (*
 
 	// Get the user
 	var user model.User
-	if err := r.DB.Where(&model.User{Email: input.Email}).First(&user).Error; err != nil {
+	if err := database.PostgreSQL().Where(&model.User{Email: input.Email}).First(&user).Error; err != nil {
 		return nil, err
 	}
 
@@ -69,7 +70,7 @@ func (r *mutationResolver) Login(ctx context.Context, input model.LoginInput) (*
 		return nil, err
 	}
 
-	if err := r.Redis.Set(context.Background(), user.Email, refreshToken, 0).Err(); err != nil {
+	if err := database.Redis().Set(context.Background(), user.Email, refreshToken, 0).Err(); err != nil {
 		return nil, err
 	}
 
@@ -105,7 +106,7 @@ func (r *mutationResolver) Logout(ctx context.Context) (*model.LogoutPayload, er
 	claims, _ := token.Claims.(jwt.MapClaims)
 
 	if token.Valid && claims["sub"] != "" {
-		r.Redis.Del(context.Background(), fmt.Sprint(claims["sub"]))
+		database.Redis().Del(context.Background(), fmt.Sprint(claims["sub"]))
 	} else {
 		return nil, errors.New("Something went wrong on backend")
 	}

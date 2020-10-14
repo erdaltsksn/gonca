@@ -14,10 +14,8 @@ import (
 	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-redis/redis/v8"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 
+	"github.com/erdaltsksn/gonca/database"
 	"github.com/erdaltsksn/gonca/generated"
 	"github.com/erdaltsksn/gonca/graph"
 	"github.com/erdaltsksn/gonca/model"
@@ -25,29 +23,13 @@ import (
 
 func main() {
 	// Connect the database
-	dsn := "host=postgres user=gonca_user password=gonca_password dbname=gonca_db port=5432 sslmode=disable TimeZone=Asia/Istanbul"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
+	db := database.PostgreSQL()
 
 	// Migrate the schema
 	db.AutoMigrate(&model.User{})
 
-	// Connect to Redis
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
-		Password: "",
-		DB:       0, // use default DB
-	})
-
 	// Define graphql config
-	cfg := generated.Config{
-		Resolvers: &graph.Resolver{
-			DB:    db,
-			Redis: rdb,
-		},
-	}
+	cfg := generated.Config{Resolvers: &graph.Resolver{}}
 
 	cfg.Directives.Authenticated = func(ctx context.Context, obj interface{}, next graphql.Resolver) (interface{}, error) {
 		if ctx.Value("Authorization") == nil {

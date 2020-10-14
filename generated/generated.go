@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -41,6 +42,7 @@ type ResolverRoot interface {
 }
 
 type DirectiveRoot struct {
+	Authenticated func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error)
 }
 
 type ComplexityRoot struct {
@@ -294,6 +296,8 @@ extend type Query {
 `, BuiltIn: false},
 	{Name: "api/user.graphql", Input: `scalar Time
 
+directive @Authenticated on FIELD_DEFINITION
+
 type User {
   id: ID!
   email: String!
@@ -329,7 +333,7 @@ type LogoutPayload {
 extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
   login(input: LoginInput!): LoginPayload!
-  logout: LogoutPayload!
+  logout: LogoutPayload! @Authenticated
 }
 `, BuiltIn: false},
 }
@@ -663,8 +667,28 @@ func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().Logout(rctx)
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().Logout(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.Authenticated == nil {
+				return nil, errors.New("directive Authenticated is not implemented")
+			}
+			return ec.directives.Authenticated(ctx, nil, directive0)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.LogoutPayload); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/erdaltsksn/gonca/model.LogoutPayload`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)

@@ -1,5 +1,7 @@
 scalar Time
 
+directive @Authenticated on FIELD_DEFINITION
+
 type User {
   id: ID!
   email: String!
@@ -35,5 +37,5 @@ type LogoutPayload {
 extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
   login(input: LoginInput!): LoginPayload!
-  logout: LogoutPayload!
+  logout: LogoutPayload! @Authenticated
 }

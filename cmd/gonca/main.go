@@ -17,8 +17,8 @@ import (
 
 	"github.com/erdaltsksn/gonca/database"
 	"github.com/erdaltsksn/gonca/generated"
+	"github.com/erdaltsksn/gonca/generated/model"
 	"github.com/erdaltsksn/gonca/graph"
-	"github.com/erdaltsksn/gonca/model"
 )
 
 func main() {

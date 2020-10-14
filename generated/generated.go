@@ -14,7 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/erdaltsksn/gonca/model"
+	"github.com/erdaltsksn/gonca/generated/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -349,7 +349,7 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 	var arg0 model.CreateUserInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNCreateUserInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐCreateUserInput(ctx, tmp)
+		arg0, err = ec.unmarshalNCreateUserInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐCreateUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -364,7 +364,7 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 	var arg0 model.LoginInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNLoginInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginInput(ctx, tmp)
+		arg0, err = ec.unmarshalNLoginInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLoginInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -605,7 +605,7 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.CreateUserPayload)
 	fc.Result = res
-	return ec.marshalNCreateUserPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐCreateUserPayload(ctx, field.Selections, res)
+	return ec.marshalNCreateUserPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐCreateUserPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -647,7 +647,7 @@ func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*model.LoginPayload)
 	fc.Result = res
-	return ec.marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginPayload(ctx, field.Selections, res)
+	return ec.marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLoginPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -688,7 +688,7 @@ func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.
 		if data, ok := tmp.(*model.LogoutPayload); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/erdaltsksn/gonca/model.LogoutPayload`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/erdaltsksn/gonca/generated/model.LogoutPayload`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -702,7 +702,7 @@ func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*model.LogoutPayload)
 	fc.Result = res
-	return ec.marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx, field.Selections, res)
+	return ec.marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLogoutPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PingPayload_message(ctx context.Context, field graphql.CollectedField, obj *model.PingPayload) (ret graphql.Marshaler) {
@@ -772,7 +772,7 @@ func (ec *executionContext) _Query_ping(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*model.PingPayload)
 	fc.Result = res
-	return ec.marshalNPingPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐPingPayload(ctx, field.Selections, res)
+	return ec.marshalNPingPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐPingPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2711,16 +2711,16 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCreateUserInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐCreateUserInput(ctx context.Context, v interface{}) (model.CreateUserInput, error) {
+func (ec *executionContext) unmarshalNCreateUserInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐCreateUserInput(ctx context.Context, v interface{}) (model.CreateUserInput, error) {
 	res, err := ec.unmarshalInputCreateUserInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCreateUserPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐCreateUserPayload(ctx context.Context, sel ast.SelectionSet, v model.CreateUserPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNCreateUserPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐCreateUserPayload(ctx context.Context, sel ast.SelectionSet, v model.CreateUserPayload) graphql.Marshaler {
 	return ec._CreateUserPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCreateUserPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐCreateUserPayload(ctx context.Context, sel ast.SelectionSet, v *model.CreateUserPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNCreateUserPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐCreateUserPayload(ctx context.Context, sel ast.SelectionSet, v *model.CreateUserPayload) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -2745,16 +2745,16 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) unmarshalNLoginInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginInput(ctx context.Context, v interface{}) (model.LoginInput, error) {
+func (ec *executionContext) unmarshalNLoginInput2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLoginInput(ctx context.Context, v interface{}) (model.LoginInput, error) {
 	res, err := ec.unmarshalInputLoginInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNLoginPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginPayload(ctx context.Context, sel ast.SelectionSet, v model.LoginPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNLoginPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLoginPayload(ctx context.Context, sel ast.SelectionSet, v model.LoginPayload) graphql.Marshaler {
 	return ec._LoginPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLoginPayload(ctx context.Context, sel ast.SelectionSet, v *model.LoginPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLoginPayload(ctx context.Context, sel ast.SelectionSet, v *model.LoginPayload) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -2764,11 +2764,11 @@ func (ec *executionContext) marshalNLoginPayload2ᚖgithubᚗcomᚋerdaltsksnᚋ
 	return ec._LoginPayload(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNLogoutPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v model.LogoutPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNLogoutPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v model.LogoutPayload) graphql.Marshaler {
 	return ec._LogoutPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v *model.LogoutPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐLogoutPayload(ctx context.Context, sel ast.SelectionSet, v *model.LogoutPayload) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -2778,11 +2778,11 @@ func (ec *executionContext) marshalNLogoutPayload2ᚖgithubᚗcomᚋerdaltsksn�
 	return ec._LogoutPayload(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNPingPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐPingPayload(ctx context.Context, sel ast.SelectionSet, v model.PingPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNPingPayload2githubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐPingPayload(ctx context.Context, sel ast.SelectionSet, v model.PingPayload) graphql.Marshaler {
 	return ec._PingPayload(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNPingPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋmodelᚐPingPayload(ctx context.Context, sel ast.SelectionSet, v *model.PingPayload) graphql.Marshaler {
+func (ec *executionContext) marshalNPingPayload2ᚖgithubᚗcomᚋerdaltsksnᚋgoncaᚋgeneratedᚋmodelᚐPingPayload(ctx context.Context, sel ast.SelectionSet, v *model.PingPayload) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")

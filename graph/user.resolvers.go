@@ -12,7 +12,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go/v4"
 	"github.com/erdaltsksn/gonca/database"
 	"github.com/erdaltsksn/gonca/generated"
-	"github.com/erdaltsksn/gonca/model"
+	"github.com/erdaltsksn/gonca/generated/model"
 	"golang.org/x/crypto/bcrypt"
 )
 

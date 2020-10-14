@@ -7,7 +7,7 @@ import (
 	"context"
 
 	"github.com/erdaltsksn/gonca/generated"
-	"github.com/erdaltsksn/gonca/model"
+	"github.com/erdaltsksn/gonca/generated/model"
 )
 
 func (r *queryResolver) Ping(ctx context.Context) (*model.PingPayload, error) {

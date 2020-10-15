@@ -25,8 +25,8 @@ type BaseModel struct {
 	DeletedAt *time.Time `json:"deleted_at" sql:"index"`
 }
 
-// BeforeCreate generates and sets an `UUID` for `ID` column.
-func (baseModel *BaseModel) BeforeCreate(tx *gorm.DB) error {
+// BeforeSave generates and sets an `UUID` for `ID` column.
+func (baseModel *BaseModel) BeforeSave(tx *gorm.DB) error {
 	generatedUUID, err := uuid.NewRandom()
 	if err != nil {
 		return err

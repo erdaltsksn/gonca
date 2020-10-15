@@ -1,14 +1,23 @@
-package model
+package auth
 
 import (
 	"errors"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
-	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+
+	"github.com/erdaltsksn/gonca/database"
 )
+
+// User model
+type User struct {
+	database.BaseModel
+
+	Email    string `json:"email" gorm:"UNIQUE;NOT NULL"`
+	Password string `json:"password" gorm:"NOT NULL"`
+}
 
 // Validate validates the model.
 func (u *User) Validate() error {
@@ -40,12 +49,6 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if err := tx.Where(&User{Email: u.Email}).First(&tmpUser).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
 		return errors.New("This email is already registered")
 	}
-
-	generatedUUID, err := uuid.NewRandom()
-	if err != nil {
-		return err
-	}
-	u.ID = generatedUUID.String()
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {

@@ -9,5 +9,6 @@ RUN CGO_ENABLED=0 go build -o gonca ./cmd/gonca/main.go
 FROM scratch
 
 COPY --from=builder /app/gonca .
+COPY --from=builder /app/.config.yml .
 
 CMD ["./gonca"]

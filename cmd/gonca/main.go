@@ -4,13 +4,17 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/erdaltsksn/cui"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/spf13/viper"
 
 	"github.com/erdaltsksn/gonca/auth"
 	"github.com/erdaltsksn/gonca/database"
@@ -19,6 +23,25 @@ import (
 )
 
 func main() {
+	// Read in config file and ENV variables if set.
+	dir, err := os.Getwd()
+	if err != nil {
+		cui.Error("Couldn't get the working directory", err)
+	}
+
+	// Search config in the working directory with name ".config" (without extension).
+	viper.AddConfigPath(dir)
+	viper.SetConfigName(".config")
+
+	// Read in environment variables that match.
+	viper.AutomaticEnv()
+
+	// If a config file is found, read it in.
+	if err := viper.ReadInConfig(); err == nil {
+		fmt.Println("Using config file:")
+		cui.Info(viper.ConfigFileUsed())
+	}
+
 	// Connect the database
 	db := database.PostgreSQL()
 
@@ -45,7 +68,14 @@ func main() {
 
 	r.Handle("/", srv)
 
-	log.Fatal(http.ListenAndServe(":4000", r))
+	var addr string
+	if viper.IsSet("server.url") {
+		addr = viper.GetString("server.url")
+	}
+	if viper.IsSet("server.port") {
+		addr += ":" + viper.GetString("server.port")
+	}
+	log.Fatal(http.ListenAndServe(addr, r))
 }
 
 // addHeaders adds headers to context.

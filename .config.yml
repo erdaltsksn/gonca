@@ -1,0 +1,18 @@
+server:
+  url: "gateway"
+  port: 4000
+
+postgresql:
+  host: "postgres"
+  port: "5432"
+  user: "gonca_user"
+  pass: "gonca_password"
+  name: "gonca_db"
+
+redis:
+  addr: "redis:6379"
+  pass: ""
+  db: 0
+
+auth:
+  secret: "gonca_auth_secret"

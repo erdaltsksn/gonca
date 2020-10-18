@@ -7,6 +7,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/spf13/viper"
 )
 
 // AuthenticatedDirective ...
@@ -23,7 +24,7 @@ func AuthenticatedDirective(ctx context.Context, next graphql.Resolver) (interfa
 			return nil, errors.New(fmt.Sprint("Unexpected signing method:", token.Header["alg"]))
 		}
 
-		return []byte("gonca_auth_secret"), nil
+		return []byte(viper.GetString("auth.secret")), nil
 	})
 	if err != nil {
 		var errExpired *jwt.TokenExpiredError

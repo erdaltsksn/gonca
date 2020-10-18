@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/spf13/viper"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/erdaltsksn/gonca/database"
@@ -57,14 +58,14 @@ func Login(input model.LoginInput) (*model.LoginPayload, error) {
 	accessToken, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user.Email,
 		"exp": time.Now().Add(time.Minute * 5).Unix(),
-	}).SignedString([]byte("gonca_auth_secret"))
+	}).SignedString([]byte(viper.GetString("auth.secret")))
 	if err != nil {
 		return nil, err
 	}
 
 	refreshToken, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user.Email,
-	}).SignedString([]byte("gonca_auth_secret"))
+	}).SignedString([]byte(viper.GetString("auth.secret")))
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +92,7 @@ func Logout(ctx context.Context) (*model.LogoutPayload, error) {
 			return nil, errors.New(fmt.Sprint("Unexpected signing method:", token.Header["alg"]))
 		}
 
-		return []byte("gonca_auth_secret"), nil
+		return []byte(viper.GetString("auth.secret")), nil
 	})
 	if err != nil {
 		var errExpired *jwt.TokenExpiredError

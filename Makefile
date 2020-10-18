@@ -39,6 +39,5 @@ godoc: ## Start local godoc server
 
 .PHONY: clean
 clean: ## Clean all generated files
-	rm -rf ./gateway/node_modules
 	rm -rf ./vendor/
 	rm -rf ./go.sum

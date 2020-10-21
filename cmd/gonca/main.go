@@ -11,6 +11,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/erdaltsksn/cui"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -66,6 +67,7 @@ func main() {
 		addHeaders,
 	)
 
+	r.Handle("/playground", playground.Handler("Gonca", "/graphql"))
 	r.Handle("/graphql", srv)
 
 	var addr string

@@ -40,7 +40,8 @@ cd gonca
 docker-compose up --build
 ```
 
-You can visit the GraphQL Playground at http://localhost:4000/
+You can visit the [GraphQL Playground](http://localhost:4000/playground) to
+explore the queries.
 
 ## Installation
 

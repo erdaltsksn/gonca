@@ -56,39 +56,12 @@ TODO: Need documentation
 You can use any method describe below after running the application via
 `docker-compose up`.
 
-### Via `Curl`
+### Ping via `Curl`
 
 ```sh
-curl --location --request POST 'http://localhost:4000/' \
+curl --location --request POST 'http://localhost:4000/graphql' \
 --header 'Content-Type: application/json' \
---data-raw '{"query":"query {\n  ping {\n    message\n  }\n}","variables":{}}'
-```
-
-### Via `Axios`
-
-```javascript
-var axios = require("axios");
-var data = JSON.stringify({
-  query: "query {\n  ping {\n    message\n  }\n}",
-  variables: {},
-});
-
-var config = {
-  method: "post",
-  url: "http://localhost:4000/",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  data: data,
-};
-
-axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+--data-raw '{"query":"query { ping { message }}","variables":{}}'
 ```
 
 ## Getting Help

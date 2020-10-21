@@ -66,7 +66,7 @@ func main() {
 		addHeaders,
 	)
 
-	r.Handle("/", srv)
+	r.Handle("/graphql", srv)
 
 	var addr string
 	if viper.IsSet("server.url") {

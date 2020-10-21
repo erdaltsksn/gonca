@@ -58,52 +58,36 @@ You can use any method describe below after running the application via
 ### Via `Curl`
 
 ```sh
-curl --request POST \
-  --url 'http://localhost:4000/query?=' \
-  --header 'content-type: application/json' \
-  --data '{"query":"{\n  ping {\n    message\n  }\n}"}'
+curl --location --request POST 'http://localhost:4000/' \
+--header 'Content-Type: application/json' \
+--data-raw '{"query":"query {\n  ping {\n    message\n  }\n}","variables":{}}'
 ```
 
 ### Via `Axios`
 
 ```javascript
-import axios from "axios";
+var axios = require("axios");
+var data = JSON.stringify({
+  query: "query {\n  ping {\n    message\n  }\n}",
+  variables: {},
+});
 
-const options = {
-  method: "POST",
-  url: "http://localhost:4000/query",
-  params: { "": "" },
-  headers: { "content-type": "application/json" },
-  data: '{"query":"{\n  ping {\n    message\n  }\n}"}',
+var config = {
+  method: "post",
+  url: "http://localhost:4000/",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  data: data,
 };
 
-axios
-  .request(options)
+axios(config)
   .then(function (response) {
-    console.log(response.data);
+    console.log(JSON.stringify(response.data));
   })
   .catch(function (error) {
-    console.error(error);
+    console.log(error);
   });
-```
-
-### Via `Python`
-
-```python
-import http.client
-
-conn = http.client.HTTPConnection("localhost:4000")
-
-payload = "{\"query\":\"{\\n  ping {\\n    message\\n  }\\n}\"}"
-
-headers = { 'content-type': "application/json" }
-
-conn.request("POST", "/query?=", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
 ```
 
 ## Getting Help

@@ -12,9 +12,15 @@ best practice.
 
 ## Features
 
+- Modular app structure
 - [Docker](https://www.docker.com) and [Docker Compose](https://github.com/docker/compose)
   based devops environment
 - GraphQL API with [99designs/gqlgen](https://github.com/99designs/gqlgen)
+- Configuration using [spf13/viper](https://github.com/spf13/viper)
+- Routing and Middlewares using [go-chi/chi](https://github.com/go-chi/chi)
+- Database and ORM using [jinzhu/gorm](https://github.com/jinzhu/gorm) and
+  [go-redis/redis](https://github.com/go-redis/redis)
+- Authentication and Authorization using [dgrijalva/jwt-go](https://github.com/dgrijalva/jwt-go)
 
 ## Requirements
 

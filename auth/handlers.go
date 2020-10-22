@@ -84,27 +84,10 @@ func Login(input model.LoginInput) (*model.LoginPayload, error) {
 
 // Logout ...
 func Logout(ctx context.Context) (*model.LogoutPayload, error) {
-	tokenString := fmt.Sprint(ctx.Value("Authorization"))
-
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, errors.New(fmt.Sprint("Unexpected signing method:", token.Header["alg"]))
-		}
-
-		return []byte(viper.GetString("auth.secret")), nil
-	})
+	token, claims, err := ParseJwtToken(ctx)
 	if err != nil {
-		var errExpired *jwt.TokenExpiredError
-		if errors.As(err, &errExpired) {
-			return nil, errors.New("Token is expired")
-		}
-
-		return nil, errors.New(fmt.Sprint("Failed to parse JWT token:", err))
+		return nil, err
 	}
-
-	// Get claims for token.
-	claims, _ := token.Claims.(jwt.MapClaims)
 
 	if token.Valid && claims["sub"] != "" {
 		database.Redis().Del(context.Background(), fmt.Sprint(claims["sub"]))

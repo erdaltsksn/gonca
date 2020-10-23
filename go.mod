@@ -12,7 +12,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/spf13/viper v1.7.1
 	github.com/vektah/gqlparser/v2 v2.1.0
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
 	gorm.io/driver/postgres v1.0.5
 	gorm.io/gorm v1.20.5
 )

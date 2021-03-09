@@ -14,5 +14,5 @@ require (
 	github.com/vektah/gqlparser/v2 v2.1.0
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
 	gorm.io/driver/postgres v1.0.8
-	gorm.io/gorm v1.20.12
+	gorm.io/gorm v1.21.3
 )
